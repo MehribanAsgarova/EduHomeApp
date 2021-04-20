@@ -8,7 +8,6 @@ namespace EduHomeApp.Models
     public class CourseDetail
     {
         public int Id { get; set; }
-        public virtual CourseWeOffer CourseOfferId { get; set; }
         public string ImageName { get; set; }
         public string ProgramName { get; set; }
         public string ProgramDescription { get; set; }
