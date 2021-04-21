@@ -20,7 +20,7 @@
                                         @Html.Raw(slide.Title)
                                         
                                         <p>@slide.Description </p>
-                                        <a class="default-btn" href="about.html">Learn more</a>
+                                        <a class="default-btn" asp-controller="about" asp-action="index">Learn more</a>
                                     </div>
                                 </div>
                             </div>
@@ -45,26 +45,22 @@
                     @foreach (Notice notice in Model.Notices)
                     {
                         <div class="single-notice-left mb-25 pb-25">
-                            <h4>@notice.Date</h4>
+                            <h4>@notice.Date.ToString("d, MMMM yyyy", new CultureInfo("en-US"))</h4>
                             <p>@notice.Description</p>
                         </div>
                     }
-                                    </div>
+             </div>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="notice-right">
+                    @foreach (InfoBoard infoBoard in Model.InfoBoards)
+                    {
                     <div class="single-notice-right mb-25 pb-25">
-                        <h3>PROFESSIONAL TEACHER</h3>
-                        <p>I must explain to you how all this mistaken idea of denouncing pleure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings </p>
+                        <h3>@infoBoard.Title</h3>
+                        <p>@infoBoard.Description/p>
                     </div>
-                    <div class="single-notice-right mb-25 pb-25">
-                        <h3>Online courses</h3>
-                        <p>I must explain to you how all this mistaken idea of denouncing pleure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings </p>
-                    </div>
-                    <div class="single-notice-right">
-                        <h3>easy to addmission</h3>
-                        <p>I must explain to you how all this mistaken idea of denouncing pleure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings </p>
-                    </div>
+                    }
+                    
                 </div>
             </div>
         </div>
@@ -99,57 +95,27 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="single-course">
-                    <div class="course-img">
-                        <a href="course-details.html">
-                            <img src="img/course/course1.jpg" alt="course">
-                            <div class="course-hover">
-                                <i class="fa fa-link"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="course-content">
-                        <h3><a href="course-details.html">CSE ENGINEERING</a></h3>
-                        <p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness</p>
-                        <a class="default-btn" href="course-details.html">read more</a>
-                    </div>
+            @foreach (Course course in Model.Courses.OrderByDescending(i => i.Id).Take(3))
+            {<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="single-course">
+        <div class="course-img">
+            <a asp-controller="course" asp-action="detail" asp-route-id="@course.Id">
+                <img src="~/img/course/@course.ImageName" alt="course">
+                <div class="course-hover">
+                    <i class="fa fa-link"></i>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="single-course">
-                    <div class="course-img">
-                        <a href="course-details.html">
-                            <img src="img/course/course2.jpg" alt="course">
-                            <div class="course-hover">
-                                <i class="fa fa-link"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="course-content">
-                        <h3><a href="course-details.html">CSE ENGINEERING</a></h3>
-                        <p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness</p>
-                        <a class="default-btn" href="course-details.html">read more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 hidden-sm col-xs-12">
-                <div class="single-course">
-                    <div class="course-img">
-                        <a href="course-details.html">
-                            <img src="img/course/course3.jpg" alt="course">
-                            <div class="course-hover">
-                                <i class="fa fa-link"></i>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="course-content">
-                        <h3><a href="course-details.html">CSE ENGINEERING</a></h3>
-                        <p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness</p>
-                        <a class="default-btn" href="course-details.html">read more</a>
-                    </div>
-                </div>
-            </div>
+            </a>
+        </div>
+        <div class="course-content">
+            <h3><a asp-controller="course" asp-action="detail" asp-route-id="@course.Id">@course.CourseName</a></h3>
+            <p>@course.Description</p>
+            <a class="default-btn" asp-controller="course" asp-action="detail" asp-route-id="@course.Id">read more</a>
+        </div>
+    </div>
+</div>
+
+            }
+            
         </div>
     </div>
 </div>
@@ -167,144 +133,49 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="single-event mb-35">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">20 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">MICRO BIOLOGICAL WORKSHOP</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
+                @foreach (Event event1 in Model.Events.OrderByDescending(i => i.Id).Take(4))
+                {
+                    <div class="single-event mb-35">
+                        <div class="event-date">
+                            <h3><a href="event-details.html">@event1.Date.ToString("dd MMM", new CultureInfo("en-US"))</a></h3>
                         </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-event mb-35">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">18 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">ADVANCE PHP WORKSHOP</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
-                        </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
+                        <div class="event-content text-left">
+                            <div class="event-content-left">
+                                <h4><a href="event-details.html">@event1.Title</a></h4>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i>@event1.StartTime.ToString("hh:mm tt", new CultureInfo("en-US")) - @event1.EndTime.ToString("hh:mm tt", new CultureInfo("en-US"))</li>
+                                    <li><i class="fa fa-map-marker"></i>@event1.Location</li>
+                                </ul>
+                            </div>
+                            <div class="event-content-right">
+                                <a class="default-btn" href="event/detail?id=@event1.Id">join now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="single-event mb-35">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">16 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">LEARN ENGLISH HISTORY</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
-                        </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-event">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">14 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">GLOBAL ECONOMIC CONFERENCE</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
-                        </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
+                }
+                
             </div>
             <div class="col-md-6 hidden-sm hidden-xs">
-                <div class="single-event mb-35">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">12 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">MATHEMATICAL WORKSHOP</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
+                @foreach (Event event1 in Model.Events.OrderByDescending(i => i.Id).Skip(4).Take(4))
+                {
+                    <div class="single-event mb-35">
+                        <div class="event-date">
+                            <h3><a href="event-details.html">@event1.Date.ToString("dd MMM", new CultureInfo("en-US"))</a></h3>
                         </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-event mb-35">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">10 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">WORDPRESS AUTHOR MEET UP</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
-                        </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
+                        <div class="event-content text-left">
+                            <div class="event-content-left">
+                                <h4><a href="event-details.html">@event1.Title</a></h4>
+                                <ul>
+                                    <li><i class="fa fa-clock-o"></i>@event1.StartTime.ToString("hh:mm tt", new CultureInfo("en-US")) - @event1.EndTime.ToString("hh:mm tt", new CultureInfo("en-US"))</li>
+                                    <li><i class="fa fa-map-marker"></i>@event1.Location</li>
+                                </ul>
+                            </div>
+                            <div class="event-content-right">
+                                <a class="default-btn" asp-controller="event" asp-action="detail" asp-route-id="@event1.Id">join now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="single-event mb-35">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">08 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">DIGITAL MARKETING ANALYSIS</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
-                        </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-event">
-                    <div class="event-date">
-                        <h3><a href="event-details.html">06 <span>June</span></a></h3>
-                    </div>
-                    <div class="event-content text-left">
-                        <div class="event-content-left">
-                            <h4><a href="event-details.html">WROKSHOP ON UI &amp; UX</a></h4>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                                <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                            </ul>
-                        </div>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
@@ -346,26 +217,31 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="single-blog">
-                    <div class="blog-img">
-                        <a href="blog-details.html"><img src="img/blog/blog1.jpg" alt="blog"></a>
-                        <div class="blog-hover">
-                            <a href="blog-details.html"><i class="fa fa-link"></i></a>
+            
+            @foreach (Blog blog in Model.Blogs.OrderByDescending(i=>i.Id).Take(3))
+            {
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="single-blog">
+                        <div class="blog-img">
+                            <a href="blog-details.html"><img src="~/img/blog/@blog.Name" alt="blog"></a>
+                            <div class="blog-hover">
+                                <a href="blog-details.html"><i class="fa fa-link"></i></a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-top">
-                            <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                        </div>
-                        <div class="blog-bottom">
-                            <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                            <a href="blog-details.html">read more</a>
+                        <div class="blog-content">
+                            <div class="blog-top">
+                                <p>@blog.Author /  @blog.Date.ToString("MMMM dd,yyyy", new CultureInfo("en-US"))   /  <i class="fa fa-comments-o"></i> 4</p>
+                            </div>
+                            <div class="blog-bottom">
+                                <h2><a href="blog-details.html">@blog.Title </a></h2>
+                                <a href="blog-details.html">read more</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
+
+            }
+            @*<div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="single-blog">
                     <div class="blog-img">
                         <a href="blog-details.html"><img src="img/blog/blog2.jpg" alt="blog"></a>
@@ -402,7 +278,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
