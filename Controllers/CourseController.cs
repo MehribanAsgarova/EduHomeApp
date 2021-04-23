@@ -30,5 +30,12 @@ namespace EduHomeApp.Controllers
             return View(course);
 
         }
+        public async Task<IActionResult> Search(string? key)
+        {
+            List<Course> courses = await _context.Courses.Where(c => c.CourseName.Contains(key)).ToListAsync();
+
+            return PartialView("~/Views/Shared/Partials/_CoursePartial.cshtml", courses);
+        }
     }
 }
+

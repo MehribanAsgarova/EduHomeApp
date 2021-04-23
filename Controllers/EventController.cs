@@ -34,5 +34,11 @@ namespace EduHomeApp.Controllers
             return View(event1);
            
         }
+        public async Task<IActionResult> Search(string? key)
+        {
+            List<Event> events = await _context.Events.Where(t => t.Title.Contains(key)).ToListAsync();
+
+            return PartialView("~/Views/Shared/Partials/_EventPartial.cshtml", events);
+        }
     }
 }

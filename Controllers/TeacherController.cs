@@ -20,6 +20,7 @@ namespace EduHomeApp.Controllers
         }
         public IActionResult Index()
         {
+
             return View(_context.Teachers.ToList());
         }
         public async Task<IActionResult> Detail(int? id)
@@ -36,6 +37,12 @@ namespace EduHomeApp.Controllers
             };
 
             return View(teacherVM);
+        }
+        public async Task<IActionResult> Search(string? key)
+        {
+            List<Teacher> teachers = await _context.Teachers.Where(t => t.Name.Contains(key)).ToListAsync();
+
+            return PartialView("~/Views/Shared/Partials/_TeacherPartial.cshtml", teachers);
         }
     }
 }
