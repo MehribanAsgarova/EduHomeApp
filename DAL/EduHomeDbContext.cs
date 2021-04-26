@@ -23,6 +23,8 @@ namespace EduHomeApp.DAL
         public DbSet<CourseFeature> CourseFeatures { get; set; }
         public DbSet<About> Abouts { get; set; }
         public DbSet<InfoBoard> InfoBoards { get; set; }
+        public DbSet<BlogComment> BlogComments { get; set; }
+        public DbSet<EventComment> EventComments { get; set; }
 
     }
 }

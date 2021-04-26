@@ -29,18 +29,18 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="single-blog mb-60">
                         <div class="blog-img">
-                            <a href="#"><img src="img/blog/@blog.Name" alt="blog"></a>
+                            <a href="blog/detail?id=@blog.Id"><img src="img/blog/@blog.Name" alt="blog"></a>
                             <div class="blog-hover">
                                 <i class="fa fa-link"></i>
                             </div>
                         </div>
                         <div class="blog-content">
                             <div class="blog-top">
-                                <p>@blog.Author  /  @blog.Date.ToString("MMMM dd,yyyy", new CultureInfo("en-US"))  /  <i class="fa fa-comments-o"></i> 4</p>
+                                <p>@blog.Author  /  @blog.Date.ToString("MMMM dd,yyyy", new CultureInfo("en-US"))  /  <i class="fa fa-comments-o"></i> @blog.BlogComment.Count</p>
                             </div>
                             <div class="blog-bottom">
                                 <h2><a href="blog-details.html">@blog.Title </a></h2>
-                                <a  href="blog/detail?id=@blog.Id" >read more</a>
+                                <a href="blog/detail?id=@blog.Id">read more</a>
                             </div>
                         </div>
                     </div>
@@ -53,10 +53,10 @@
                     <ul>
                         @for (int i = 1; i <= ViewBag.PageCount; i++)
                         {
-                            
+
                             if (ViewBag.Page == i)
                             {
-                                <li >
+                                <li>
                                     <a href="#">@i</a>
                                 </li>
                             }
@@ -70,8 +70,8 @@
                             }
                         }
                     </ul>
-                  
-              
+
+
                 </div>
             </div>
         </div>
@@ -98,9 +98,12 @@
                     </form>
                     <!-- mailchimp-alerts Start -->
                     <div class="mailchimp-alerts">
-                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
-                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                        <div class="mailchimp-submitting"></div>
+                        <!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div>
+                        <!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div>
+                        <!-- mailchimp-error end -->
                     </div>
                     <!-- mailchimp-alerts end -->
                 </div>
@@ -109,5 +112,5 @@
     </div>
 </div>
 <!-- Subscribe End -->
-<!-- Fo
+
 

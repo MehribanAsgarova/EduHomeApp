@@ -67,6 +67,35 @@ namespace EduHomeApp.Migrations
                     b.ToTable("Blogs");
                 });
 
+            modelBuilder.Entity("EduHomeApp.Models.BlogComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("BlogComments");
+                });
+
             modelBuilder.Entity("EduHomeApp.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -190,6 +219,35 @@ namespace EduHomeApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("EduHomeApp.Models.EventComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventComments");
                 });
 
             modelBuilder.Entity("EduHomeApp.Models.InfoBoard", b =>
@@ -386,6 +444,13 @@ namespace EduHomeApp.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("EduHomeApp.Models.BlogComment", b =>
+                {
+                    b.HasOne("EduHomeApp.Models.Blog", "Blog")
+                        .WithMany("BlogComment")
+                        .HasForeignKey("BlogId");
+                });
+
             modelBuilder.Entity("EduHomeApp.Models.Course", b =>
                 {
                     b.HasOne("EduHomeApp.Models.CourseFeature", "CourseFeature")
@@ -393,6 +458,13 @@ namespace EduHomeApp.Migrations
                         .HasForeignKey("CourseFeatureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EduHomeApp.Models.EventComment", b =>
+                {
+                    b.HasOne("EduHomeApp.Models.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("EduHomeApp.Models.Skill", b =>

@@ -1,0 +1,25 @@
+﻿@model Event
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class=" row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-text">
+                    <img src="~/img/event/@Model.ImageName" style="width:50px; height:50px; border-radius:0" />
+                </div>
+                <h4>@Model.Title</h4>
+                <h4>@Model.SpeakerEvent.ElementAt(0).Speaker.Name</h4>
+
+           
+                <a asp-action="Index">Go Back</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

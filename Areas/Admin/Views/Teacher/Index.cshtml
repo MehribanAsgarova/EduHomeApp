@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Teacher>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row">
+    <div class="table-responsive pt-3">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                        Teacher Name
+                    </th>
+                    <th>
+                        Setting
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Teacher teacher in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/img/teacher/@teacher.ImageName" style="width:50px; height:50px; border-radius:0" />
+                        </td>
+                        <td>
+                            @teacher.Name
+                        </td>
+                        <td>
+                            <a class="btn btn-success" asp-action="Detail" asp-route-id="@teacher.Id">
+                                Detail
+                            </a>
+
+                            <a class="btn btn-warning" asp-action="Update" asp-route-id="@teacher.Id">
+                                Update
+                            </a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@teacher.Id">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+}
+            </tbody>
+        </table>
+    </div>
+</div>
+

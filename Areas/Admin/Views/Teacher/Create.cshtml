@@ -1,0 +1,130 @@
+﻿@model Teacher
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Create New Teacher</h4>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form class="forms-sample" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Position"></label>
+                        <input class="form-control" asp-for="Position">
+                        <span class="text-danger" asp-validation-for="Position"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AboutMe"></label>
+                        <input class="form-control" asp-for="AboutMe">
+                        <span class="text-danger" asp-validation-for="AboutMe"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Degree"></label>
+                        <input class="form-control" asp-for="Degree">
+                        <span class="text-danger" asp-validation-for="Degree"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Experience"></label>
+                        <input class="form-control" asp-for="Experience">
+                        <span class="text-danger" asp-validation-for="Experience"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Hobby"></label>
+                        <input class="form-control" asp-for="Hobby">
+                        <span class="text-danger" asp-validation-for="Hobby"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Faculty"></label>
+                        <input class="form-control" asp-for="Faculty">
+                        <span class="text-danger" asp-validation-for="Faculty"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input class="form-control" asp-for="Email">
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone"></label>
+                        <input class="form-control" asp-for="Phone">
+                        <span class="text-danger" asp-validation-for="Phone"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Skype"></label>
+                        <input class="form-control" asp-for="Skype">
+                        <span class="text-danger" asp-validation-for="Skype"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Facebook"></label>
+                        <input class="form-control" asp-for="Facebook">
+                        <span class="text-danger" asp-validation-for="Facebook"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pinterest"></label>
+                        <input class="form-control" asp-for="Pinterest">
+                        <span class="text-danger" asp-validation-for="Pinterest"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Vimeo"></label>
+                        <input class="form-control" asp-for="Vimeo">
+                        <span class="text-danger" asp-validation-for="Vimeo"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Twitter"></label>
+                        <input class="form-control" asp-for="Twitter">
+                        <span class="text-danger" asp-validation-for="Twitter"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Skill.Language"></label>
+                        <input class="form-control" asp-for="Skill.Language">
+                        <span class="text-danger" asp-validation-for="Skill.Language"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Skill.TeamLeader"></label>
+                        <input class="form-control" asp-for="Skill.TeamLeader">
+                        <span class="text-danger" asp-validation-for="Skill.TeamLeader"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Skill.Development"></label>
+                        <input class="form-control" asp-for="Skill.Development">
+                        <span class="text-danger" asp-validation-for="Skill.Development"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Skill.Design"></label>
+                        <input class="form-control" asp-for="Skill.Design">
+                        <span class="text-danger" asp-validation-for="Skill.Design"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Skill.Innovation"></label>
+                        <input class="form-control" asp-for="Skill.Innovation">
+                        <span class="text-danger" asp-validation-for="Skill.Innovation"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Skill.Communication"></label>
+                        <input class="form-control" asp-for="Skill.Communication">
+                        <span class="text-danger" asp-validation-for="Skill.Communication"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Photo"></label>
+                        <input class="form-control " asp-for="Photo" accept="image/*">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a asp-action="Index" class="btn btn-light">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*@section Scripts{
+        <partial name="_Validation" />
+    }*@
+
+

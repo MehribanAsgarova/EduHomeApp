@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduHomeApp.DAL;
 using EduHomeApp.Models;
+using EduHomeApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,6 +40,24 @@ namespace EduHomeApp.Controllers
             List<Event> events = await _context.Events.Where(t => t.Title.Contains(key)).ToListAsync();
 
             return PartialView("~/Views/Shared/Partials/_EventPartial.cshtml", events);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EventComment(EventCommentVM eventCommentVM)
+        {
+            EventComment eventComment = new EventComment()
+            {
+                Event = _context.Events.Find(eventCommentVM.id),
+                Name = eventCommentVM.name,
+                Email = eventCommentVM.email,
+                Subject = eventCommentVM.subject,
+                Description = eventCommentVM.message
+            };
+
+            _context.EventComments.Add(eventComment);
+            await _context.SaveChangesAsync();
+            return Redirect(nameof(Index));
+
         }
     }
 }

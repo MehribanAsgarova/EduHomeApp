@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace EduHomeApp.Models
 {
@@ -25,7 +27,10 @@ namespace EduHomeApp.Models
         public string Pinterest { get; set; }
         public string Vimeo { get; set; }
         public string Twitter { get; set; }
-        
+
+        [NotMapped]
+        public IFormFile Photo { get; set; }
+
         public Skill Skill { get; set; }
 
     }

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Event>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="table-responsive pt-3">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Image
+                    </th>
+                    <th>
+                        Event
+                    </th>
+                    <th>
+                        Setting
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Event event1 in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/img/event/@event1.ImageName" style="width:50px; height:50px; border-radius:0" />
+                        </td>
+                        <td>
+                            @event1.Title
+                        </td>
+                        <td>
+                            <a class="btn btn-success" asp-action="Detail" asp-route-id="@event1.Id">
+                                Detail
+                            </a>
+
+                            <a class="btn btn-warning" asp-action="Update" asp-route-id="@event1.Id">
+                                Update
+                            </a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@event1.Id">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
