@@ -1,0 +1,65 @@
+﻿@model Event
+@{
+    ViewData["Title"] = "Update";
+}
+
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Old Photo</h4>
+                <img src="~/img/event/@Model.ImageName" style="width:400px; height:300px; border-radius:0;" alt="Alternate Text" />
+                <h4> @Model.Title</h4>
+                <h4>@Html.Raw(Model.Description)</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <form class="forms-sample" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Photo"></label>
+            <input class="form-control" asp-for="Photo" accept="image/*">
+            <span class="text-danger" asp-validation-for="Photo"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input class="form-control" asp-for="Title">
+            <span class="text-danger" asp-validation-for="Title"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <input class="form-control" asp-for="Description">
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Date"></label>
+            <input class="form-control" asp-for="Date">
+            <span class="text-danger" asp-validation-for="Date"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartTime"></label>
+            <input class="form-control" asp-for="StartTime">
+            <span class="text-danger" asp-validation-for="StartTime"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndTime"></label>
+            <input class="form-control" asp-for="EndTime">
+            <span class="text-danger" asp-validation-for="EndTime"></span>
+        </div>
+        <div class="form-group" id="CourseFeatures">
+          <div>
+                    <select asp-for="SpeakerEvent" multiple class="chosen-select">
+                        @foreach (Speaker speaker in ViewBag.Speaker)
+                        {
+                            <option value="@speaker.Id">@speaker.Name</option>
+                        }
+                    </select>
+                </div>
+        </div>
+        <button type="submit" class="btn btn-warning mr-2">Update</button>
+        <a class="btn btn-dark" asp-action="Index">Go Back</a>
+    </form>
+</div>
+

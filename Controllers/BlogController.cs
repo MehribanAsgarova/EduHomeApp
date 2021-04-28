@@ -42,7 +42,7 @@ namespace EduHomeApp.Controllers
         {
             if (id == null) return NotFound();
 
-            Blog blog = await _context.Blogs.FindAsync(id);
+            Blog blog = await _context.Blogs.Include(b=>b.BlogComment).FirstOrDefaultAsync(b=>b.Id==id);
             if (blog == null) return NotFound();
 
             return View(blog);
@@ -85,9 +85,9 @@ namespace EduHomeApp.Controllers
                 Description = blogCommentVM.message
             };
 
-            _context.BlogComments.Add(blogComment);
+            await _context.BlogComments.AddAsync(blogComment);
             await _context.SaveChangesAsync();
-            return Redirect(nameof(Index));
+            return View();
 
         }
     }

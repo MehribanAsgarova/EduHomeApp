@@ -5,9 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using EduHomeApp.DAL;
 using EduHomeApp.Extensions;
+using EduHomeApp.Helpers;
 using EduHomeApp.Models;
+using EduHomeApp.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduHomeApp.Areas.Admin.Controllers
@@ -41,74 +44,126 @@ namespace EduHomeApp.Areas.Admin.Controllers
 
             return View();
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Event @event)
-        //{
-        //    ViewBag.CourseFeatures = await _context.CourseFeatures.ToListAsync();
-
-        //    if (!ModelState.IsValid) return View();
-        //    //CourseFeature courseFeature = await _context.CourseFeatures.ToList();
-        //    if (@event.Photo == null)
-        //    {
-        //        ModelState.AddModelError("", "Choose an image");
-        //        return View();
-        //    }
-        //    if (!@event.Photo.IsImage())
-        //    {
-        //        ModelState.AddModelError("", "You must choose only img format");
-        //        return View();
-        //    }
-        //    if (@event.Photo.CheckFileSize(300))
-        //    {
-        //        ModelState.AddModelError("", "The size of image must not be more than 300Kb");
-        //        return View();
-        //    }
-
-        //    string filefolder = Path.Combine("img", "event");
-        //    @event.ImageName = await @event.Photo.SaveFileAsync(_env.WebRootPath, filefolder);
-        //    await _context.Events.AddAsync(@event);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-
-        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Event @event, int? SpId)
+        public async Task<IActionResult> Create(SpeakerEventVM speakerEventVM)
         {
-            ViewBag.CourseFeatures = await _context.CourseFeatures.ToListAsync();
-
+           
+            ViewBag.Speaker = await _context.Speakers.ToListAsync();
             if (!ModelState.IsValid) return View();
-            
-            if (@event.Photo == null)
+
+            if (speakerEventVM.Event.Photo == null)
             {
                 ModelState.AddModelError("", "Choose an image");
                 return View();
             }
-            if (!@event.Photo.IsImage())
+            if (!speakerEventVM.Event.Photo.IsImage())
             {
                 ModelState.AddModelError("", "You must choose only img format");
                 return View();
             }
-            if (@event.Photo.CheckFileSize(300))
+            if (speakerEventVM.Event.Photo.CheckFileSize(300))
             {
                 ModelState.AddModelError("", "The size of image must not be more than 300Kb");
                 return View();
             }
 
-            List<Speaker> speaker = new List<Speaker>
+            string filefolder = Path.Combine("img", "event");
+
+            string filename = await speakerEventVM.Event.Photo.SaveFileAsync(_env.WebRootPath, filefolder);
+
+            Event @event = new Event()
             {
-                new Speaker{Id = (int)SpId},
-                
+                ImageName = filename,
+                Title=speakerEventVM.Event.Title,
+                Date = speakerEventVM.Event.Date,
+                StartTime = speakerEventVM.Event.StartTime,
+                EndTime = speakerEventVM.Event.EndTime,
+                Location = speakerEventVM.Event.Location,
+                Description = speakerEventVM.Event.Description
             };
 
-            string filefolder = Path.Combine("img", "event");
-            @event.ImageName = await @event.Photo.SaveFileAsync(_env.WebRootPath, filefolder);
-            
+            ICollection<SpeakerEvent> speakerEvents = new List<SpeakerEvent>();
+
+            foreach (int id in speakerEventVM.speakerIds)
+            {
+                speakerEvents.Add(new SpeakerEvent() { SpeakerId = id });
+            }
+
+            @event.SpeakerEvent = speakerEvents;
+
             await _context.Events.AddAsync(@event);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
+        }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            Event @event = await _context.Events.FindAsync(id);
+
+            if (@event == null) return NotFound();
+
+            return View(@event);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteEvent(int? id)
+        {
+            if (id == null) return NotFound();
+            Event @event = await _context.Events.FindAsync(id);
+            if (@event == null) return NotFound();
+
+            Helper.DeleteFile(_env.WebRootPath, "img", @event.ImageName);
+
+            _context.Events.Remove(@event);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Update(int? id)
+        {
+            ViewBag.Speaker = await _context.Speakers.ToListAsync();
+            if (id == null) return NotFound();
+            Event @event = await _context.Events.FindAsync(id);
+            if (@event == null) return NotFound();
+            return View(@event);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int? id, Event @event)
+        {
+            ViewBag.Speaker = await _context.Speakers.ToListAsync();
+            if (id == null) return NotFound();
+            Event dbEvent = await _context.Events.FindAsync(id);
+            if (@event == null) return NotFound();
+
+            if (ModelState["Photo"].ValidationState == ModelValidationState.Invalid)
+            {
+                ModelState.AddModelError("Photo", "Zehmet Olmasa Shekil Secin");
+                return View();
+            }
+
+            if (!@event.Photo.IsImage())
+            {
+                ModelState.AddModelError("File", "Duzgun File Secin");
+                return View();
+            }
+
+            if (@event.Photo.CheckFileSize(300))
+            {
+                ModelState.AddModelError("Photo", "300 kb -da artiq olcude fayl yuklemek olmaz");
+                return View();
+            }
+
+            Helper.DeleteFile(_env.WebRootPath, "img/event", dbEvent.ImageName);
+
+            dbEvent.ImageName = await @event.Photo.SaveFileAsync(_env.WebRootPath, "img/event");
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
     }

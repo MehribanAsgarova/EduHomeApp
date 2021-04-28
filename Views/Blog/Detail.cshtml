@@ -32,7 +32,7 @@
                     </div>
                     <div class="blog-details-content">
                         <h2>@Model.Title</h2>
-                        <h6>@Model.Author  /  @Model.Date.ToString("MMMM dd,yyyy", new CultureInfo("en-US"))   /  <i class="fa fa-comments-o"></i> 4/h6>
+                        <h6>@Model.Author  /  @Model.Date.ToString("MMMM dd,yyyy", new CultureInfo("en-US"))   /  <i class="fa fa-comments-o"></i> @Model.BlogComment.Count/<h6>
                         <p>@Html.Raw(Model.Description) </p>
                     </div>
                     <div class="reply-area">
@@ -59,10 +59,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="reply-btn" href="#" data-text="send"><span>send message</span></button>
-                            
-                            <p class="form-messege"></p>
                         </form>
-                       
                     </div>
                 </div>
             </div>
