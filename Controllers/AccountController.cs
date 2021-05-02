@@ -36,7 +36,7 @@ namespace EduHomeApp.Controllers
             EduHomeUser eduHomeUser = await _userManager.FindByNameAsync(loginVM.Username);
             if (eduHomeUser == null)
             {
-                ModelState.AddModelError("", "Email Or Password Is Wrong!!!");
+                ModelState.AddModelError("", "Username Or Password Is Wrong!!!");
                 return View(loginVM);
             }
 
@@ -54,10 +54,16 @@ namespace EduHomeApp.Controllers
             }
             if (!signInResult.Succeeded)
             {
-                ModelState.AddModelError("", "Email Or Password Is Wrong!!!");
+                ModelState.AddModelError("", "Username Or Password Is Wrong!!!");
                 return View(loginVM);
             }
             TempData["UserFullName"] = eduHomeUser.FullName;
+
+            var result = (await _userManager.GetRolesAsync(eduHomeUser))[0];
+            if (result == "Admin")
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
 
             return RedirectToAction("Index", "Home");
         }

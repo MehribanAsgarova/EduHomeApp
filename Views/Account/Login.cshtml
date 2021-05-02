@@ -31,6 +31,7 @@
                             <span>Please login using account detail bellow.</span>
                         </div>
                         <div class="login-form">
+                            <div asp-validation-summary="ModelOnly" class=" text-danger"></div>
                             <form method="post">
                                 <div>
                                     <input asp-for="Username" placeholder="Username">

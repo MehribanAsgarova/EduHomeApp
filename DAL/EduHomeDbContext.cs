@@ -26,6 +26,9 @@ namespace EduHomeApp.DAL
         public DbSet<InfoBoard> InfoBoards { get; set; }
         public DbSet<BlogComment> BlogComments { get; set; }
         public DbSet<EventComment> EventComments { get; set; }
+        public DbSet<ContactComment> ContactComments { get; set; }
+        public DbSet<Subscribe> Subscribes { get; set; }
+
 
     }
 }

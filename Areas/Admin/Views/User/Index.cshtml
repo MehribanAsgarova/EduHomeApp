@@ -1,0 +1,81 @@
+﻿@model List<UserVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="table-responsive pt-3">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        FullName
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        UserName
+                    </th>
+                    <th>
+                        Role
+                    </th>
+                    <th>
+                        Blocked
+                    </th>
+                    <th>
+                        Setting
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (UserVM userVM in Model)
+                {
+    <tr>
+        <td>
+            @userVM.FullName
+        </td>
+        <td>
+            @userVM.Email
+        </td>
+        <td>
+            @userVM.Username
+        </td>
+        <td>
+            @userVM.Role
+        </td>
+        @if (userVM.IsDeleted)
+        {
+<td class="text-danger">
+    Disabled
+</td> }
+                else
+                {
+<td class="text-success">
+    Enabled
+</td>}
+
+        <td>
+            @if (userVM.IsDeleted)
+            {
+<a class="btn btn-success" asp-action="IsActive" asp-route-id="@userVM.Id">
+    Active
+</a> }
+                else
+                {
+<a class="btn btn-danger" asp-action="IsActive" asp-route-id="@userVM.Id">
+    DeActive
+</a>}
+            <a class="btn btn-warning" asp-action="ChangeRole" asp-route-id="@userVM.Id">
+                Change Role
+            </a>
+            <a class="btn btn-danger" asp-action="ChangePassword" asp-route-id="@userVM.Id">
+                Change Password
+            </a>
+        </td>
+    </tr>}
+            </tbody>
+        </table>
+    </div>
+</div>
+

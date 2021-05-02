@@ -123,48 +123,57 @@ namespace EduHomeApp.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
         public async Task<IActionResult> Update(int? id)
         {
             ViewBag.Speaker = await _context.Speakers.ToListAsync();
             if (id == null) return NotFound();
             Event @event = await _context.Events.FindAsync(id);
             if (@event == null) return NotFound();
+            //SpeakerEventVM speaker = new SpeakerEventVM()
+            //{
+            //    Event = @event
+            //};
+            
             return View(@event);
         }
+      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int? id, Event @event)
+        public async Task<IActionResult> Update(int? id, Event formevent, int[] speakerIds)
         {
             ViewBag.Speaker = await _context.Speakers.ToListAsync();
             if (id == null) return NotFound();
-            Event dbEvent = await _context.Events.FindAsync(id);
+
+            //speakerEventVM.Event.Id = (int)id;
+            //_context.Update(speakerEventVM.Event);
+            Event @event = await _context.Events.Include(e=>e.SpeakerEvent).FirstOrDefaultAsync(e=>e.Id == id);
             if (@event == null) return NotFound();
 
-            if (ModelState["Photo"].ValidationState == ModelValidationState.Invalid)
+            @event.Title = formevent.Title;
+            @event.Description = formevent.Description;
+            @event.Date = formevent.Date;
+            @event.StartTime = formevent.StartTime;
+            @event.EndTime = formevent.EndTime;
+            @event.Location = formevent.Location;
+            foreach (int SEid in speakerIds)
             {
-                ModelState.AddModelError("Photo", "Zehmet Olmasa Shekil Secin");
-                return View();
+                if (!@event.SpeakerEvent.Any(s=>s.SpeakerId == SEid))
+                {
+                    @event.SpeakerEvent.Add(new SpeakerEvent() { SpeakerId = SEid });
+                }
+                
             }
+            string filefolder = Path.Combine("img", "event");
 
-            if (!@event.Photo.IsImage())
-            {
-                ModelState.AddModelError("File", "Duzgun File Secin");
-                return View();
-            }
-
-            if (@event.Photo.CheckFileSize(300))
-            {
-                ModelState.AddModelError("Photo", "300 kb -da artiq olcude fayl yuklemek olmaz");
-                return View();
-            }
-
-            Helper.DeleteFile(_env.WebRootPath, "img/event", dbEvent.ImageName);
-
-            dbEvent.ImageName = await @event.Photo.SaveFileAsync(_env.WebRootPath, "img/event");
+            string filename = await formevent.Photo.SaveFileAsync(_env.WebRootPath, filefolder);
+            @event.ImageName = filename;
             await _context.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
+           
         }
+        
 
     }
 }

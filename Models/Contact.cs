@@ -15,5 +15,7 @@ namespace EduHomeApp.Models
         public string Description { get; set; }
         [NotMapped]
         public IFormFile Photo { get; set; }
+
+        public virtual ICollection<ContactComment> ContactComment { get; set; }
     }
 }
