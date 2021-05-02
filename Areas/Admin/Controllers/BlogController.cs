@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EduHomeApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
     public class BlogController : Controller
     {
         private readonly EduHomeDbContext _context;

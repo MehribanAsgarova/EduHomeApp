@@ -30,8 +30,9 @@ namespace EduHomeApp.Controllers
 
             await _context.Subscribes.AddAsync(subscribe);
             await _context.SaveChangesAsync();
-            return View();
+            return Content("Success!!!");
            
+
         }
     }
 }

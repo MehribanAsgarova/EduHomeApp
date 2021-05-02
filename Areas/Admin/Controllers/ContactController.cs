@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EduHomeApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
     public class ContactController : Controller
     {
         private readonly EduHomeDbContext _context;

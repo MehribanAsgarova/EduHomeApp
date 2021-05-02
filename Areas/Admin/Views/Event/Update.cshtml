@@ -28,6 +28,11 @@
             <span class="text-danger" asp-validation-for="Title"></span>
         </div>
         <div class="form-group">
+            <label asp-for="Location"></label>
+            <input class="form-control" asp-for="Location">
+            <span class="text-danger" asp-validation-for="Location"></span>
+        </div>
+        <div class="form-group">
             <label asp-for="Description"></label>
             <input class="form-control" asp-for="Description">
             <span class="text-danger" asp-validation-for="Description"></span>
@@ -48,14 +53,14 @@
             <span class="text-danger" asp-validation-for="EndTime"></span>
         </div>
         <div class="form-group" id="CourseFeatures">
-          <div>
-                    <select name="speakerIds" multiple class="chosen-select">
-                        @foreach (Speaker speaker in ViewBag.Speaker)
-                        {
-                            <option value="@speaker.Id">@speaker.Name</option>
-                        }
-                    </select>
-                </div>
+            <div>
+                <select name="speakerIds" multiple class="chosen-select">
+                    @foreach (Speaker speaker in ViewBag.Speaker)
+                    {
+                        <option value="@speaker.Id">@speaker.Name</option>
+                    }
+                </select>
+            </div>
         </div>
         <button type="submit" class="btn btn-warning mr-2">Update</button>
         <a class="btn btn-dark" asp-action="Index">Go Back</a>

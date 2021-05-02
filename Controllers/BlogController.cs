@@ -87,7 +87,8 @@ namespace EduHomeApp.Controllers
 
             await _context.BlogComments.AddAsync(blogComment);
             await _context.SaveChangesAsync();
-            return View();
+            //return View();
+            return Content("Success!!!");
 
         }
     }

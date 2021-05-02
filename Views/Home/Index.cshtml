@@ -99,7 +99,7 @@
             {<div class="col-md-4 col-sm-6 col-xs-12">
     <div class="single-course">
         <div class="course-img">
-            <a asp-controller="course" asp-action="detail" asp-route-id="@course.Id">
+            <a href="course/detail?id=@course.Id">
                 <img src="~/img/course/@course.ImageName" alt="course">
                 <div class="course-hover">
                     <i class="fa fa-link"></i>
@@ -109,7 +109,8 @@
         <div class="course-content">
             <h3><a asp-controller="course" asp-action="detail" asp-route-id="@course.Id">@course.CourseName</a></h3>
             <p>@course.Description</p>
-            <a class="default-btn" asp-controller="course" asp-action="detail" asp-route-id="@course.Id">read more</a>
+            @*<a class="default-btn" asp-controller="course" asp-action="detail" asp-route-id="@course.Id">read more</a>*@
+            <a class="default-btn"  href="course/detail?id=@course.Id">read more</a>
         </div>
     </div>
 </div>
@@ -223,9 +224,9 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="single-blog">
                         <div class="blog-img">
-                            <a href="blog-details.html"><img src="~/img/blog/@blog.Name" alt="blog"></a>
+                            <a asp-controller="blog" asp-action="detail" asp-route-id="@blog.Id"><img src="~/img/blog/@blog.Name" alt="blog"></a>
                             <div class="blog-hover">
-                                <a href="blog-details.html"><i class="fa fa-link"></i></a>
+                                <a asp-controller="blog" asp-action="detail" asp-route-id="@blog.Id"><i class="fa fa-link"></i></a>
                             </div>
                         </div>
                         <div class="blog-content">
@@ -234,7 +235,7 @@
                             </div>
                             <div class="blog-bottom">
                                 <h2><a href="blog-details.html">@blog.Title </a></h2>
-                                <a href="blog-details.html">read more</a>
+                                <a asp-controller="blog" asp-action="detail" asp-route-id="@blog.Id">read more</a>
                             </div>
                         </div>
                     </div>

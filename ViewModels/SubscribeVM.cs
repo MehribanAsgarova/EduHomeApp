@@ -10,6 +10,6 @@ namespace EduHomeApp.ViewModels
     {
         public int Id { get; set; }
         [Required]
-        public int Email { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -165,6 +165,7 @@ namespace EduHomeApp.Areas.Admin.Controllers
                 }
                 
             }
+            Helper.DeleteFile(_env.WebRootPath, "img/event", @event.ImageName);
             string filefolder = Path.Combine("img", "event");
 
             string filename = await formevent.Photo.SaveFileAsync(_env.WebRootPath, filefolder);

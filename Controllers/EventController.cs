@@ -56,7 +56,8 @@ namespace EduHomeApp.Controllers
 
             _context.EventComments.Add(eventComment);
             await _context.SaveChangesAsync();
-            return Redirect(nameof(Index));
+            //return Redirect(nameof(Index));
+            return Content("Success!!!");
 
         }
     }
